@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+    xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd"
+    version="2.0">
+
+    <persistence-unit-metadata>
+        <persistence-unit-defaults>
+            <cascade-persist/>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+    
+    <named-native-query name="getLayerTree" result-class="nl.b3p.viewer.config.services.Layer">
+        <query><![CDATA[
+            with x (id) as (
+				select id from layer where id = :rootId 
+				union all
+				select l2.id from layer l2, x where x.id = l2.parent
+				)
+			select * from layer where exists (select 1 from x where x.id = layer.id)
+        ]]></query>    
+    </named-native-query>
+    <named-native-query name="getLevelTree" result-class="nl.b3p.viewer.config.app.Level">
+        <query><![CDATA[
+            with x (id) as (
+				select id from level_ where id = :rootId 
+				union all
+				select l2.id from level_ l2, x where x.id = l2.parent
+				)
+			select * from level_ where exists (select 1 from x where x.id = level_.id)
+        ]]></query>    
+    </named-native-query>    
+
+    <!-- For SQLServer the IDENTITY strategy will use (big)serial columns -->
+
+    <entity class="nl.b3p.viewer.config.services.Category">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.services.GeoService">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.services.Layer">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.services.FeatureSource">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+    
+    <entity class="nl.b3p.viewer.config.services.SimpleFeatureType">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+    
+    <entity class="nl.b3p.viewer.config.services.AttributeDescriptor">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+    
+    <entity class="nl.b3p.viewer.config.services.Document">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.app.Application">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.app.Level">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.app.ConfiguredComponent">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.app.ConfiguredAttribute">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+
+    <entity class="nl.b3p.viewer.config.app.ApplicationLayer">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>
+    
+    <entity class="nl.b3p.viewer.config.services.LayarService">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>    
+    
+    <entity class="nl.b3p.viewer.config.services.LayarSource">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+        </attributes>
+    </entity>  
+
+    <entity class="nl.b3p.viewer.config.app.Resource">
+        <attributes>
+            <basic name="data">
+                <column nullable="false" name="data_" column-definition="bytea"/>
+            </basic>
+        </attributes>
+    </entity>
+	
+</entity-mappings>
