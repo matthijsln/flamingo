@@ -46,7 +46,16 @@
                                     outputfilename="schema-export-postgresql.sql"
                                     format="true">
                                     <jpaconfiguration persistenceUnit="viewer-config-postgresql"/>
-                                </hbm2ddl>                                                                                             
+                                </hbm2ddl>   
+                                
+                                <hbm2ddl                                
+                                    export="false"
+                                    drop="false"
+                                    create="true"
+                                    outputfilename="schema-export-mssql.sql"
+                                    format="true">
+                                    <jpaconfiguration persistenceUnit="viewer-config-microsoft sql server"/>
+                                </hbm2ddl>                                                                                                                                                                                                                      
                             </hibernatetool>
                         </configuration>
                         <goals>
